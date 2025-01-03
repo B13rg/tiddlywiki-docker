@@ -1,6 +1,6 @@
 FROM node:alpine
 
-ENV TW_VERSION=5.2.7
+ENV TW_VERSION=5.3.6
 RUN npm install -g tiddlywiki@${TW_VERSION}
 
 # Setup wiki volume

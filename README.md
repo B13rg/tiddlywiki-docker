@@ -1,6 +1,10 @@
-# TiddliWiki 5 Docker image
+# TiddliWiki Docker image
 
-Run TiddlyWiki 5 via Docker.
+[TiddlyWiki](https://tiddlywiki.com/) is a self-contained JavaScript wiki that's useful as a non-linear notebook for capturing, organizing, and sharing complex information.
+These container images are for running TiddlyWiki as a Node.js application, which improves syncing and saving functionality over the single file version.
+
+See the [TiddlyWiki release notes](https://tiddlywiki.com/#Releases) for details on specific versions.
+
 
 Forked from
 [m0wer/tiddlywiki-docker](https://github.com/m0wer/tiddlywiki-docker)
@@ -43,7 +47,7 @@ The following environment variables can be used to configure the container:
 
 |ENV var|Description|Default|
 |---|---|---|
-|TW_VERSION|TiddlyWiki version|`5.2.7`|
+|TW_VERSION|TiddlyWiki version|`5.3.6`|
 |USERNAME|Username for authentication, enables auth if set|``|
 |PASSWORD|Password for authentication|`wiki`|
 |DEBUG_LEVEL|Debug level|`none`|
