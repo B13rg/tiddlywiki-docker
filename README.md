@@ -3,104 +3,53 @@
 Run TiddlyWiki 5 via Docker.
 
 Forked from
+[m0wer/tiddlywiki-docker](https://github.com/m0wer/tiddlywiki-docker)
+forked from
 [djmaze/tiddlywiki-docker](https://github.com/djmaze/tiddlywiki-docker).
 
-The Docker image is available at [m0wer/tiddlywiki - Docker
-Hub](https://hub.docker.com/r/m0wer/tiddlywiki).
+The Docker image is available at [ghcr.io/b13rg/tiddlywiki-docker - GHCR](https://github.com/users/B13rg/packages/container/package/tiddlywiki-docker.
 
-## Available Docker Images at DockerHub
-
-Image Name       | Tag        | TiddyWiki Version
------------------|------------|------------------
-m0wer/tiddlywiki | latest     | 5.2.7
-m0wer/tiddlywiki | v[X]       | [X]
-m0wer/tiddlywiki | test       | ?
 
 ## Prerequisites
 
-* Docker.
+* Docker + Compose
 
 ## Quickstart
 
+See `docker-compoase` file: [compose](./compose.yml)
+
+---
+
 ```bash
-docker run -d -p 8080:8080 m0wer/tiddlywiki
+docker run -d -p 8277:8277 ghcr.io/b13rg/tiddlywiki
 ```
 
 Now TiddlyWiki should be running on
-[http://localhost:8080](http://localhost:8080).
+[http://localhost:8277](http://localhost:8277).
 
-## Keeping the data
+## Persistence
 
-The container uses a Docker volume to save the wiki data. In order not
-to lose sight of that, I recommend using a local directory for the volume.
+The container can use a docker volume to save the wiki data which is stored in `var/lob/tiddlywiki`.
 
 ```bash
-docker run -d -p 8080:8080 -v $(pwd)/.tiddlywiki:/var/lib/tiddlywiki m0wer/tiddlywiki
+docker run -d -p 8277:8277 -v $(pwd)/.tiddlywiki:/var/lib/tiddlywiki ghcr.io/b13rg/tiddlywiki
 ```
 
 In this example, the folder `$(pwd)/.tiddlywiki` is used for the data.
 
-## Authentication
+## Configuration
 
-Authentication is disabled by default. To enable it, simply provide the
-`USERNAME` and `PASSWORD` environment variables.
+The following environment variables can be used to configure the container:
 
-## Other settings
+|ENV var|Description|Default|
+|---|---|---|
+|TW_VERSION|TiddlyWiki version|`5.2.7`|
+|USERNAME|Username for authentication, enables auth if set|``|
+|PASSWORD|Password for authentication|`wiki`|
+|DEBUG_LEVEL|Debug level|`none`|
+|PATH_PREFIX|URL path prefix - [docs](https://tiddlywiki.com/static/Using%2520a%2520custom%2520path%2520prefix%2520with%2520the%2520client-server%2520edition.html)|``|
+|PLUGINS|List of plugins - [docs](https://tiddlywiki.com/static/Using%2520TiddlyWiki%2520on%2520Node.js.html)|``|
+|NODE_MEM|Limit Node.js memory (in MB)|``|
+|NODEJS_V8_ARGS|List of Node.js V8 arguments|``|
+|EXTRAOPTIONS|Extra options for tiddlywiki command|``|
 
-### Limit Node.js memory
-
-If you are in a memory-constrained environment, you can provide the
-`NODE_MEM` environment variable to specify the memory ceiling (in MB)
-
-### Debug
-
-Set the `DEBUG_LEVEL` environment variable to `debug`. For example by passing
-`-e DEBUG_LEVEL=debug` option in `docker run`.
-
-### Path prefix
-
-Set the `PATH_PREFIX` environment variable to customize the path prefix for
-serving TiddlyWiki. For example by passing `-e PATH_PREFIX=\wiki` option in
-`docker run`. According to this [note][path-prefix-note], please remember to
-configure the client as well.
-
-[path-prefix-note]: https://tiddlywiki.com/static/Using%2520a%2520custom%2520path%2520prefix%2520with%2520the%2520client-server%2520edition.html
-
-## Docker Compose
-
-To keep all the docker settings, environment variables and volume data in a folder you can use `docker compose`.
-
-Create a folder for the project:
-
-```
-mkdir my-tiddlywiki-docker
-cd my-tiddlywiki-docker
-```
-
-Create a folder for the data:
-
-```
-mkdir tiddlywiki
-```
-
-Create `docker-compose.yml` with the following contents:
-
-```
-version: '3'
-services:
-  tiddlywiki:
-    image: m0wer/tiddlywiki
-    volumes:
-      - ./tiddlywiki:/var/lib/tiddlywiki
-    restart: unless-stopped
-    ports:
-      - 8080:8080
-    #environment:
-    #  - DEBUG_LEVEL=debug
-    #  - PATH_PREFIX=\wiki
-    #  - NODE_MEM=128
-    #  - USERNAME=test
-    #  - PASSWORD=test
-```
-
-Then run `docker compose up -d`.

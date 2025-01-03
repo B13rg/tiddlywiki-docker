@@ -8,7 +8,7 @@ VOLUME /var/lib/tiddlywiki
 WORKDIR /var/lib/tiddlywiki
 
 # Add init-and-run script
-ADD init-and-run-wiki /usr/local/bin/init-and-run-wiki
+ADD startup-wiki.sh /usr/local/bin/startup-wiki.sh
 
 EXPOSE 8277
 
@@ -26,4 +26,4 @@ ENV NODE_MEM=""
 
 # Meta
 ENTRYPOINT ["/bin/sh"]
-CMD ["/usr/local/bin/init-and-run-wiki"]
+CMD ["/usr/local/bin/startup-wiki.sh"]

@@ -1,0 +1,11 @@
+services:
+  tiddlywiki:
+    image: ghcr.io/b13rg/tiddlywiki-docker:latest
+    build: .
+    ports:
+      - "8277:8277"
+    volumes:
+      - TW_Data:/var/lib/tiddlywiki
+    
+volumes:
+  TW_Data:
